@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import path from "path";
 import { ENV } from "./config/env.js";
+import mongoose from "mongoose";
 
 const app = express();
 
@@ -26,6 +27,11 @@ if(ENV.NODE_ENV === "development"){
     res.sendFile(path.join(__dirname,"../admin","dist","index.html"))
   })
 }
+
+
+mongoose.connect(ENV.DB_URL).then(() => {
+    console.log("Database Connected");
+}).catch((err) => console.log(err));
 
 app.listen(ENV.PORT, () =>
   console.log(`Your Server is running on ${ENV.PORT}`)
