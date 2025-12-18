@@ -20,6 +20,7 @@
     "ecommerce_app": "file:..",
     "express": "^5.1.0",
     "i": "^0.3.7",
+    "inngest": "^3.48.0",
     "mongoose": "^8.19.3",
     "morgan": "^1.10.1",
     "nodemon": "^3.1.11",

@@ -5,6 +5,9 @@ import path from "path";
 import { clerkMiddleware } from '@clerk/express'
 import { ENV } from "./config/env.js";
 import { connectDB } from "./config/db.js";
+import { functions,inngest } from "./config/inngest.js";
+import { serve } from "inngest/express";
+
 
 const app = express();
 
@@ -15,7 +18,8 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
-app.use(clerkMiddleware())
+app.use(clerkMiddleware());
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ message: "Success" });
