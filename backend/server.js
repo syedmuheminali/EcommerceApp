@@ -3,9 +3,8 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import path from "path";
 import { clerkMiddleware } from '@clerk/express'
-
 import { ENV } from "./config/env.js";
-import mongoose from "mongoose";
+import { connectDB } from "./config/db.js";
 
 const app = express();
 
@@ -32,10 +31,11 @@ if(ENV.NODE_ENV === "development"){
 }
 
 
-mongoose.connect(ENV.DB_URL).then(() => {
-    console.log("Database Connected");
-}).catch((err) => console.log(err));
+const startServer = async () => {
+  await connectDB();
+  app.listen(ENV.PORT, () => {
+    console.log("Server is up and running");
+  });
+};
 
-app.listen(ENV.PORT, () =>
-  console.log(`Your Server is running on ${ENV.PORT}`)
-);
+startServer();
