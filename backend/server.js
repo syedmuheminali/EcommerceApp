@@ -2,6 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import path from "path";
+import { clerkMiddleware } from '@clerk/express'
+
 import { ENV } from "./config/env.js";
 import mongoose from "mongoose";
 
@@ -14,6 +16,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use(clerkMiddleware())
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ message: "Success" });
